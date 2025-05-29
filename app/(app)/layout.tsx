@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import './globals.css';
-import AuthProvider from "./context/AuthProvider";
-import { Toaster } from "@/components/ui/sonner"
+import { FloatingNav } from '@/components/ui/floating-navbar'
+import { Suspense } from 'react';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +24,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-gradient-to-b from-gray-900 to-gray-800">
-      <AuthProvider>
-        <body
-          className={` ${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-          <Toaster/>
-        </body>
-      </AuthProvider>
+    <html lang="en">
+      <body
+        className={` ${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <FloatingNav />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 } 
