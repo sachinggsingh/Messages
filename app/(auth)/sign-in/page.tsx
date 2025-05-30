@@ -41,18 +41,18 @@ const SignIn = () => {
     const onSubmit = async (data: z.infer<typeof signInSchema>) => {
         setIsSubbmitting(true);
         const response = await signIn('credentials',{
-          redirect:false,
-          indeitifier:data.identifier,
-          password:data.password
-        })
+          redirect: false,
+          identifier: data.identifier,
+          password: data.password
+        });
         console.log(response);
         if(response?.error){
-          toast("Incorrect username for password");
+          toast.error(response.error);
         }
         if(response?.url){
-          router.replace('dashboard');
+          router.replace('/dashboard');
         }
-       
+        setIsSubbmitting(false);
     };
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-l from-slate-300 from-0% via-slate-200 via-50% to-slate-200 to-100%">

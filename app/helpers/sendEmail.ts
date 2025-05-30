@@ -13,7 +13,7 @@ export async function sendVerification(
             from: 'onboarding@resend.dev',
             to: email,
             subject: 'Verify your email address',
-            react: EmailTemplate({ firstName: username, }) as React.ReactElement,
+            react: EmailTemplate({ firstName: username, verifyCode }) as React.ReactElement,
             text: `Your verification code is: ${verifyCode}`,
         });
 
