@@ -14,14 +14,12 @@ import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    // FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2 } from "lucide-react";
 
 const SignUp = () => {
@@ -151,24 +149,6 @@ const SignUp = () => {
                             )}
                         />
 
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="remember" />
-                                <label
-                                    htmlFor="remember"
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Remember me
-                                </label>
-                            </div>
-                            <Link
-                                href="/forgot-password"
-                                className="text-sm font-medium text-primary hover:underline"
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
-
                         <Button type="submit" className="w-full" disabled={isSubmitting}>
                             {isSubmitting ? (
                                 <>
@@ -183,9 +163,9 @@ const SignUp = () => {
                 </Form>
 
                 <div className="text-center text-sm">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/sign-up" className="text-primary hover:underline">
-                        Sign up
+                    Already have an Account?{" "}
+                    <Link href="/sign-in" className="text-primary hover:underline">
+                        Sign in
                     </Link>
                 </div>
             </div>

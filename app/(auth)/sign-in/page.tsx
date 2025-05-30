@@ -21,7 +21,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2 } from "lucide-react";
 import { signInSchema } from "@/app/schemas/signIn";
 import { signIn } from "next-auth/react";
@@ -98,24 +97,6 @@ const SignIn = () => {
                                 </FormItem>
                             )}
                         />
-
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="remember" />
-                                <label
-                                    htmlFor="remember"
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Remember me
-                                </label>
-                            </div>
-                            <Link
-                                href="/forgot-password"
-                                className="text-sm font-medium text-primary hover:underline"
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
 
                         <Button type="submit" className="w-full" disabled={isSubmitting}>
                             {isSubmitting ? (
