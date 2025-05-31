@@ -3,7 +3,7 @@ import {Message} from '@/app/models/User';
 import { AcceptMessageSchema } from '@/app/schemas/acceptMessage';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner'
 import MessageCard from '@/components/Message';
@@ -33,7 +33,7 @@ const Dashboard = () => {
     setMessages(messages.filter((message) => message._id !== messageID));
   };
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get<ApiResponse>('/api/get-messages');
@@ -46,7 +46,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const handleAcceptMessages = async (checked: boolean) => {
     try {
@@ -70,13 +70,13 @@ const Dashboard = () => {
     if (session?.user) {
       fetchMessages();
     }
-  }, [session]);
+  }, [session?.user, fetchMessages]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
-        <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-lg">
+        <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-lg mt-22">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">Welcome {session?.user.username}</h1>

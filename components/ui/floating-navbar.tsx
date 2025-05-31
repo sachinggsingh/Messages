@@ -50,25 +50,25 @@ export function FloatingNav() {
 
   return (
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 mb-6">
-      <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-8 py-5 rounded-full border border-white/20">
+      <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-10 py-5 rounded-full border border-white/20">
         {navItems.map((item) => (
           item.name === "Logout" ? (
             <button
               key={item.name}
               onClick={handleLogout}
-              className="flex items-center gap-2 text-neutral-500 hover:text-white transition-colors"
+              className="flex items-center  text-neutral-500 hover:text-white transition-colors"
             >
               {item.icon}
-              <span className="text-sm">{item.name}</span>
+              <span className="text-xl">{item.name}</span>
             </button>
           ) : (
             <Link
               key={item.name}
               href={item.link}
-              className="flex items-center gap-2 text-neutral-500 hover:text-white transition-colors"
+              className="flex items-center  text-neutral-500 hover:text-white transition-colors"
             >
               {item.icon}
-              <span className="text-sm">{item.name}</span>
+              <span className="text-xl">{item.name}</span>
             </Link>
           )
         ))}
