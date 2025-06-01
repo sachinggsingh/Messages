@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner'
 import MessageCard from '@/components/Message';
 import { Switch } from '@/components/ui/switch';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/apiResponse';
 import { Loader2 } from 'lucide-react';
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
     setMessages(messages.filter((message) => message._id !== messageID));
   };
 
-  const fetchMessages = useCallback(async () => {
+  const fetchMessages = async () => {
     try {
       setLoading(true);
       const response = await axios.get<ApiResponse>('/api/get-messages');
@@ -41,36 +41,64 @@ const Dashboard = () => {
         setMessages(response.data.messages);
       }
     } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse>;
+      if(axiosError.response?.data.success === false) {
+        toast.error(axiosError.response?.data.message);
+      }
       toast.error('Failed to fetch messages');
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const handleAcceptMessages = async (checked: boolean) => {
+  const handleAcceptMessages = useCallback(async (checked: boolean = false) => {    
     try {
+      setLoading(true);
       setIsSwitchLoading(true);
+
       const response = await axios.post<ApiResponse>('/api/accept-message', {
         acceptMessage: checked
       });
       if (response.data.success) {
         setValue('acceptMessages', checked);
-        toast.success(response.data.message);
+        toast.success(response.data.isAcceptingMessages);
       }
     } catch (error) {
-      toast.error('Failed to update message acceptance status');
+      const axiosError = error as AxiosError<ApiResponse>;
+      if(axiosError.response?.data.success === false) {
+        toast.error(axiosError.response?.data.message);
+      }
+      toast.error(axiosError.response?.data.message);
       console.log(error)
     } finally {
       setIsSwitchLoading(false);
+      setLoading(false);
     }
-  };
+  }, [setValue]);
 
   useEffect(() => {
-    if (session?.user) {
-      fetchMessages();
-    }
-  }, [session?.user, fetchMessages]);
+    if (!session || !session?.user) return;
+    fetchMessages();
+    handleAcceptMessages();
+  }, [session, handleAcceptMessages]);
+
+  // const handleSwitchChange = async()=>{
+  //   try {
+  //     setIsSwitchLoading(true);
+  //     const response = await axios.post<ApiResponse>('/api/accept-message', {
+  //       acceptMessage: !acceptMessage
+  //     });
+  //     if (response.data.success) {
+  //       setValue('acceptMessages', !acceptMessage);
+  //       toast.success(response.data.isAcceptingMessages);
+  //     }
+  //   } catch (error) {
+  //     const axiosError = error as AxiosError<ApiResponse>;
+  //     if(axiosError.response?.data.success === false) {
+        
+  //   }
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">

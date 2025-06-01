@@ -12,12 +12,12 @@ const page = () => {
         Share your thoughts and questions anonymously. Connect with others in a safe and engaging way.
       </p>
       <div className="flex gap-4 justify-center">
-        <Link 
-          href="/sign-up" 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
-        >
-          Get Started
-        </Link>
+          <Link 
+            href="/sign-up" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Get Started
+          </Link>
         <Link 
           href="/sign-in" 
           className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
